@@ -1,33 +1,60 @@
 // Creates and returns a new dancer object that can step
-var makeDancer = function(top, left, timeBetweenSteps){
+var Dancer = function(top, left, timeBetweenSteps){
 
-  var dancer = {};
+  this.timeBetweenSteps = timeBetweenSteps;
 
   // use jQuery to create an HTML <span> tag
-  dancer.$node = $('<span class="dancer"></span>');
+  this.$node = $('<span class="dancer"></span>');
 
-
-  dancer.step = function(){
-    // the basic dancer doesn't do anything interesting at all on each step,
-    // it just schedules the next step
-    setTimeout(dancer.step, timeBetweenSteps);
-  };
-  dancer.step();
-
-  dancer.setPosition = function(top, left){
-    // Use css top and left properties to position our <span> tag
-    // where it belongs on the page. See http://api.jquery.com/css/
-    //
-    var styleSettings = {
-      top: top,
-      left: left
-    };
-    dancer.$node.css(styleSettings);
-  };
-
+  this.step();
   // now that we have defined the dancer object, we can start setting up important parts of it by calling the methods we wrote
   // this one sets the position to some random default point within the body
-  dancer.setPosition(top, left);
+  this.setPosition(top, left);
 
-  return dancer;
+  this.$node.hover(this.startGrow.bind(this,150),this.stopGrow.bind(this));
+  this.growIntervalId;
 };
+
+Dancer.prototype.step = function(){
+    // the basic dancer doesn't do anything interesting at all on each step,
+    // it just schedules the next step
+
+  setTimeout(this.step.bind(this), this.timeBetweenSteps);
+};
+
+Dancer.prototype.setPosition = function(top, left){
+  // Use css top and left properties to position our <span> tag
+  // where it belongs on the page. See http://api.jquery.com/css/
+  //
+  var styleSettings = {
+    top: top,
+    left: left
+  };
+  this.$node.css(styleSettings);
+};
+
+Dancer.prototype.lineUp = function(left){
+
+  var styleSettings = {
+    left: left
+  };
+  this.$node.css(styleSettings);
+};
+
+Dancer.prototype.grow = function(){
+  var factor = 5;
+  var b = this.$node.css('border-radius');
+  b = b.substr(0, b.length-2);
+  this.$node.css('border-radius', parseInt(b)+ factor +"px");
+  var b = this.$node.css('border-width');
+  b = b.substr(0, b.length-2);
+  this.$node.css('border-width', parseInt(b)+ factor +"px");
+}
+
+Dancer.prototype.startGrow = function(interval){
+  this.growIntervalId = setInterval(this.grow.bind(this), interval )
+}
+Dancer.prototype.stopGrow = function(){
+   clearInterval(this.growIntervalId);
+}
+
