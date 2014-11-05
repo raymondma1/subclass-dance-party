@@ -3,8 +3,12 @@ body, html{
 }
 body{
   margin: 0px;
-  background-color:#444;
+  background-color: rgb(121, 202, 249);
+  background-image: url('img/bg1.jpg');
+  background-repeat: repeat-x;
+  background-position: bottom ;
   font-size: 18px;
+  overflow: hidden;
 }
 body, a:link, a:visited, a:active{
   color: lightblue;
@@ -26,10 +30,11 @@ body, a:link, a:visited, a:active{
   position:absolute;
 }
 
-.nyanContainer {
+.imgContainer {
   width: 100px;
 }
-.nyanContainer img {
+.imgContainer img {
   width: 100%;
   height: auto;
 }
+.jiggl

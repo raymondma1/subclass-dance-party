@@ -55,7 +55,27 @@ Dancer.prototype.grow = function(){
 Dancer.prototype.startGrow = function(interval){
   this.growIntervalId = setInterval(this.grow.bind(this), interval )
 }
+
 Dancer.prototype.stopGrow = function(){
    clearInterval(this.growIntervalId);
 }
 
+Dancer.prototype.rePosition = function() {
+  var top = parseInt(this.$node.css('top'));
+  var left = parseInt(this.$node.css('left'));
+
+  console.log('#',top,left);
+  if ( top >= $(window).height() ) {
+    top = $(window).height() - 200;
+  }
+
+  if ( left >= $(window).width() ) {
+    left = $(window).width() - 200;
+  }
+  console.log('@',top,left);
+  var styleSettings = {
+    top: top,
+    left: left
+  };
+  this.$node.css(styleSettings);
+}

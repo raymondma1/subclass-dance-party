@@ -7,12 +7,12 @@ var RainbowBlinkyDancer = function(top, left, timeBetweenSteps){
 RainbowBlinkyDancer.prototype = Object.create(BlinkyDancer.prototype);
 RainbowBlinkyDancer.prototype.constructor = RainbowBlinkyDancer;
 
-RainbowBlinkyDancer.prototype._blinkyDancerStep = BlinkyDancer.prototype.step;
 
 RainbowBlinkyDancer.prototype.rainbowColors = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'purple'];
 RainbowBlinkyDancer.prototype.step = function(){
   // call the old version of step at the beginning of any call to this new version of step
-  this._blinkyDancerStep();
+  BlinkyDancer.prototype.step.call(this);
+
   var color;
 
 
